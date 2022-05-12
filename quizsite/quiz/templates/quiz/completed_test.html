@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+
+    function tryAgain(test_pk) {
+        var csrf = $('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url: '{% url "completed-test-page" test_pk %}',
+            type: 'post',
+            data: {
+                csrfmiddlewaretoken:csrf,
+                validator: 'True',
+            },
+            success: function (response) {
+                window.location = 'http://127.0.0.1:8000/test/' + test_pk;
+            }
+        });
+    }
+</script>
+
+<div class="container">
+    <div id="current-test-results-card">
+        <div class="row">
+            <div id="test-results">
+                {% csrf_token %}
+                <h3>You have already completed this test!</h3>
+                <p>Test: {{ test.name }}</p>
+                <p>Your result: {{ res }}/{{ test.max_result }}</p>
+                <p>Creator: {{ test.user }}</p>
+                <button type="button" id="try-again-test-btn" onclick="tryAgain('{{ test_pk }}')" class="btn btn-primary btn-sm">Try again</button>
+            </div>
+            <div id="question-results">
+
+                {% for item in result %}
+                <div id="question-results-table">
+                    {% for el in item.answer.all %}
+                    <div id="user-answer">
+                        <p>Question: {{ item.question.content }}</p>
+                        <p>Your answer: {{ el.content }}</p>
+                    </div>
+                    {% endfor %}
+                    <div id="right-answer">
+                        {% for el in item.question.answer.all %}
+                        {% if el.is_right == True %}
+                        <h5>Right answer: {{ el.content }}</h5>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

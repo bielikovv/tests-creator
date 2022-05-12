@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    function showUpdate(question_pk){
+        document.getElementById('block-input-answer').style.display = 'block';
+        $(window).scrollTop(0);
+        window.question = question_pk;
+    }
+    function hideUpdate(){
+        document.getElementById('block-input-answer').style.display = 'none';
+    }
+
+    window.chbox = 'False'
+
+    function checkBoxStatus() {
+        let chbox = document.getElementById('checkbox-answer');
+        if(chbox.checked){
+            window.chbox = 'True'
+        }
+        else{
+            window.chbox = 'False'
+        }
+    }
+
+    function addAnswer(test_pk) {
+        var csrf = $('input[name=csrfmiddlewaretoken]').val();
+        var answer = $('#add-answer-area').val();
+        $.ajax({
+            url: '{% url "redact-test" test_pk %}',
+            type: 'post',
+            data: {
+                csrfmiddlewaretoken:csrf,
+                question_pk: window.question,
+                answer: answer,
+                checkbox: window.chbox,
+            }
+        })
+        window.location.reload()
+    }
+
+    function deleteQuestion(question, test_pk) {
+        var csrf = $('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url: '{% url "redact-test" test_pk %}',
+            type: 'post',
+            data: {
+                csrfmiddlewaretoken:csrf,
+                question_delete: question,
+            }
+        })
+        window.location.reload()
+    }
+
+    function deleteAnswer(answer_pk, test_pk) {
+        var csrf = $('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url: '{% url "redact-test" test_pk %}',
+            type: 'post',
+            data: {
+                csrfmiddlewaretoken:csrf,
+                answer_delete: answer_pk,
+            }
+        })
+        window.location.reload()
+    }
+
+    function showAddQuestion() {
+        document.getElementById('create-new-question').style.display = 'block';
+        document.getElementById('add-question-btn').style.display = 'none';
+        document.getElementById('hide-add-question-btn').style.display = 'block';
+    }
+
+    function hideAddQuestion() {
+        document.getElementById('create-new-question').style.display = 'none';
+        document.getElementById('add-question-btn').style.display = 'block';
+        document.getElementById('hide-add-question-btn').style.display = 'none';
+    }
+
+
+    function postTest(test_pk) {
+        var csrf = $('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url: '{% url "redact-test" test_pk %}',
+            type: 'post',
+            data: {
+                csrfmiddlewaretoken: csrf,
+                validator: 'True',
+            },
+        });
+        window.location = 'http://127.0.0.1:8000/test/' + test_pk;
+    }
+
+
+    $(document).ready(function () {
+        var csrf = $('input[name=csrfmiddlewaretoken]').val();
+
+    });
+</script>
+
+<div class="container">
+    <div id="redact-test-card">
+        <div class="row">
+            <div id="created-questions-card">
+                <button type="button" id="add-question-btn" onclick="showAddQuestion()" class="btn btn-primary btn-sm">Add question</button>
+                <button type="button" id="hide-add-question-btn" onclick="hideAddQuestion()" class="btn btn-primary btn-sm">Hide</button>
+                <div id="create-new-question">
+                    <h5>Create question:</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" id="create-test-btn" class="btn btn-primary btn-sm">Create question</button>
+                    </form>
+                </div>
+                <h3>Questions</h3>
+                <div id="block-input-answer">
+                    {% csrf_token %}
+                    <h5>Enter answer:</h5>
+                    <textarea name="add-answer-area" id="add-answer-area" class="form-control form-control-sm"></textarea>
+                    <div id="correct-answer-status">
+                        <h5>Correct answer: <input type="checkbox" id="checkbox-answer" onchange="checkBoxStatus()"></h5>
+                    </div>
+                    <div id="add-answer-block">
+                        <button type="button" id="save-answer-btn" onclick="addAnswer('{{ test_pk }}')" class="btn btn-primary btn-sm">Save</button>
+                        <button type="button" id="hide-add-answer-btn" onclick="hideUpdate()" class="btn btn-primary btn-sm">Back</button>
+                    </div>
+                </div>
+                {% for item in questions %}
+                <div id="question-table">
+                    <div id="question">
+                        <div id="question-content">
+                            <button type="button" id="delete-question-btn" onclick="deleteQuestion('{{ item.pk }}', '{{ test_pk }}')" class="btn btn-primary btn-sm">Delete question</button>
+                            <h5><div style="color: #F64C72">Question:</div> {{ item.content }}</h5>
+                            <h6><div style="color: #F64C72">Value:</div>{{ item.value }}</h6>
+                        </div>
+                    </div>
+                    <div id="answers">
+                        <h5>Answers:</h5>
+                        {% for el in item.answer.all %}
+                        {% if el.is_right == False %}
+                        <div id="answer">
+                            {{ el.content }}
+                            <div id="status-answer">
+                                <button type="button" id="delete-answer-btn" onclick="deleteAnswer('{{ el.pk }}', '{{ test_pk }}')" class="btn btn-primary btn-sm">Delete</button>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div id="answer-correct">
+                            {{ el.content }}
+                            <div id="delete-answer">
+                                <button type="button" id="delete-correct-answer-btn" onclick="deleteAnswer('{{ el.pk }}', '{{ test_pk }}')" class="btn btn-primary btn-sm">Delete</button>
+
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        <button type="button" id="add-answer-btn" onclick="showUpdate('{{ item.pk }}')" class="btn btn-primary btn-sm">Add answer</button>
+                    </div>
+
+                </div>
+                <button type="button" id="post-test-btn" onclick="postTest('{{ test_pk }}')" class="btn btn-primary btn-sm">Post test</button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

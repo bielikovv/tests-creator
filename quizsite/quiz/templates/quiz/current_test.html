@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    $(document).ready(function () {
+        $('#test-questions-block').hide();
+        $('#start-test-btn').click(function () {
+            document.getElementById('start-test-btn').style.display = 'none';
+            $('#test-questions-block').slideDown(500);
+        })
+    })
+
+
+
+
+    function finishTest(test_pk) {
+        var csrf = $('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url: '{% url "test-page" test_pk %}',
+            type: 'post',
+            data: {
+                csrfmiddlewaretoken: csrf,
+
+            },
+        });
+        window.location = 'http://127.0.0.1:8000/test/' + test_pk + '/completed';
+    }
+
+
+
+    function sendAnswer(test_pk, is_right, value, question_pk, answer_pk) {
+        var csrf = $('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url: '{% url "test-page" test_pk %}',
+            type: 'post',
+            data: {
+                csrfmiddlewaretoken: csrf,
+                is_right:is_right,
+                value: value,
+                question_pk: question_pk,
+                answer_pk: answer_pk,
+            },
+            success: function (response) {
+                document.getElementById('chosen-answer').innerHTML = '';
+                document.getElementById('chosen-answer').append('Chosen answer: ' + response.answer);
+            }
+        });
+    }
+
+    function goToLogin() {
+        window.location = 'http://127.0.0.1:8000/login/';
+    }
+</script>
+
+<div class="container">
+    <div id="current-test-card">
+        {% if test.is_published %}
+        <div class="row">
+            <div id="test-presentation">
+                <p>Test: {{ test.name }}</p>
+                {% if test.description %}
+                <p>Description: {{ test.description }}</p>
+                {% endif %}
+                <p>Creator: {{ test.user }}</p>
+                <p>Maximum result: {{ test.max_result }}</p>
+                <p>Date of creation: {{ test.date }}</p>
+                {% if user.is_authenticated %}
+                <button type="button" id="start-test-btn" onclick="" class="btn btn-primary btn-sm">Start</button>
+                {% else %}
+                <p id="log-btn" onclick="goToLogin()">You should login to start!</p>
+                {% endif %}
+            </div>
+            {% if user.is_authenticated %}
+            <div id="test-questions-block">
+                {% for item in questions %}
+                <div id="test-question-table">
+                    <div id="question-part">
+                        {{ item.content }}
+
+                    </div>
+                    {% csrf_token %}
+                    {% for el in item.answer.all %}
+                    <div id="answer-part" onclick="sendAnswer('{{ test_pk }}', '{{ el.is_right }}', '{{ item.value }}', '{{ item.pk }}', '{{ el.pk}}')">
+                        {{ el.content }}
+                    </div>
+                    {% endfor %}
+                    <div id="chosen-answer">
+
+                    </div>
+                </div>
+                {% endfor %}
+                <button type="button" id="end-test-btn" onclick="finishTest('{{ test_pk }}')" class="btn btn-primary btn-sm">Finish test</button>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <h1>The test is under development</h1>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

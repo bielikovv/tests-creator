@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap');
+
+#block-input-answer{
+    background-color: #F64C72;
+    color: #ffffff;
+    display: none;
+    width: 100%;
+    padding: 20px;
+
+
+}
+#tab1{
+    color: #F64C72;
+}
+
+#tab2{
+    color: #2F2FA2;
+}
+
+#right-answer{
+    background-color: #00d200;
+    color: #ffffff;
+    padding: 10px;
+}
+
+#question-results-table{
+    background-color: #F64C72;
+    color: #ffffff;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+
+#end-test-btn, #redact-test-btn, #go-to-test-btn{
+    background-color: #ffffff;
+    color: #F64C72;
+    margin-top: -5px;
+}
+
+#end-test-btn:hover, #redact-test-btn:hover, #go-to-test-btn:hover{
+    background-color: #F64C72;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+#hide-add-question-btn{
+    display: none;
+}
+
+#create-new-question{
+    background-color: #ffffff;
+    width: 100%;
+    padding: 20px;
+    display: none;
+}
+
+#checkbox-answer{
+    display: inline-block;
+}
+
+#profile-card{
+    background-color: #ffffff;
+    font-family: 'Lexend Deca', sans-serif;
+}
+#completed-tests-card{
+    display: none;
+}
+
+#completed-test-table{
+    background-color: #2F2FA2;
+    padding: 10px;
+    color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#created-test-table{
+    background-color: #F64C72;
+    padding: 10px;
+    color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nav-link{
+    cursor: pointer;
+}
+
+body{
+    background-color: #2F2FA2;
+}
+
+.navbar-brand{
+    color: #ffffff;
+}
+
+.navbar{
+    margin-bottom: 50px;
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+.d-flex{
+    width: 450px;
+    margin-left: 450px;
+    margin-top: -15px;
+}
+
+#log-btn{
+    background-color: #F64C72;
+    color: #ffffff;
+    width: 25%;
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    -webkit-transition: 0.15s ease-out;
+}
+
+#log-btn:hover{
+    background-color: #ffffff;
+    color: #F64C72;
+}
+
+#test-search-card{
+    background-color: #ffffff;
+    width: 100%;
+    padding: 25px;
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+
+#test-table-search{
+    background-color: #F64C72;
+    color: #ffffff;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    -webkit-transition: 0.15s ease-out;
+}
+
+#test-table-search:hover{
+    background-color: #ffffff;
+    color: #F64C72;
+
+}
+
+#tests-column{
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+#right-text{
+    text-align: right;
+    color: #2F2FA2;
+    font-family: 'Lexend Deca', sans-serif;
+    padding: 25px;
+    font-size: 52px;
+    margin-top: 75px;
+}
+
+#redact-test-card{
+    background-color: #ffffff;
+    padding: 20px;
+    position: relative;
+}
+
+select:disabled{
+    display: none;
+}
+
+
+#question-table{
+    width: 100%;
+    background-color: #2F2FA2;
+    color: #ffffff;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+#answers{
+    background-color: #ffffff;
+    color: #2F2FA2;
+    padding: 20px;
+}
+
+#answer{
+    background-color: #F64C72;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    width: 100%;
+}
+
+#answer-correct{
+    background-color: #00d200;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    width: 100%;
+}
+#status-answer, #delete-answer{
+    text-align: right;
+
+}
+
+#delete-answer-btn{
+    background-color: #ffffff;
+    color: #F64C72;
+}
+
+#register-card, #login-card{
+    color: #1b1b1b;
+    background-color: #ffffff;
+    padding: 15px;
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+.btn-primary{
+    background-color: #F64C72;
+    color: #ffffff;
+    border-width: 0px;
+    margin-top: 5px;
+}
+
+.btn-primary:hover{
+    background-color: #ffffff;
+    color: #F64C72;
+    border: 1px solid #F64C72;
+
+}
+
+#create-test-card{
+    background-color: #ffffff;
+    padding: 20px;
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+#current-test-card{
+    width: 100%;
+    background-color: #ffffff;
+    padding: 30px;
+}
+
+#current-test-results-card{
+    width: 100%;
+    background-color: #ffffff;
+    padding: 30px;
+}
+
+#test-results{
+    width: 100%;
+    background-color: #2F2FA2;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+}
+
+#create-test, #login, #register, #logout, #profile{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.page-item:first-child .page-link{
+    border-radius: 0px;
+    background-color: #F64C72;
+    color: #ffffff;
+}
+
+.page-item:last-child .page-link{
+    border-radius: 0px;
+    background-color: #F64C72;
+    color: #ffffff;
+}
+
+.page-item .page-link{
+    background-color: #F64C72;
+    color: #ffffff;
+}
+
+.page-item.active .page-link{
+    background-color: #ffffff;
+    color: #F64C72;
+    border-color: #F64C72;
+}
+
+.page-item:active{
+    background-color: #ffffff;
+    color: #F64C72;
+}
+
+
+
+#create-test, #register{
+    margin-left: 1200px;
+}
+
+#logout, #login{
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#main-page-left-card{
+    background-color: #F64C72;
+    position: relative;
+    z-index: 999;
+    margin-left: 100px;
+    width: 30%;
+    height: 500px;
+    color: #ffffff;
+    font-size: 60px;
+    text-align: left;
+    font-family: 'Lexend Deca', sans-serif;
+    padding: 25px;
+}
+
+#main-page-right-card{
+    background-color: #ffffff;
+    position: absolute;
+    z-index: 15;
+    width: 67.5%;
+    height: 550px;
+    margin-left: 125px;
+    margin-top: 25px;
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+#test-presentation{
+    width: 100%;
+    background-color: #2F2FA2;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+}
+
+#test-questions-block{
+    width: 100%;
+    background-color: #F64C72;
+    padding: 10px;
+}
+
+#test-question-table{
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+#answer-part{
+    margin-top: 10px;
+    margin-left: 20px;
+    border: 1px solid #F64C72;
+    border-radius: 20px;
+    padding: 5px;
+    cursor: pointer;
+    -webkit-transition: 0.15s ease-out;
+    background-color: #ffffff;
+}
+
+#answer-part:hover{
+    background-color: #F64C72;
+    color: #ffffff;
+}
+
+#answer-part:focus{
+    background-color: #F64C72;
+    color: #ffffff;
+}
+
+#answer-part:active{
+    background-color: #F64C72;
+    color: #ffffff;
+}
+
+

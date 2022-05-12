@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    $(document).ready(function () {
+        var csrf = $('input[name=csrfmiddlewaretoken]').val();
+        $('#create-test-btn').click(function () {
+            var name = $('input[name=test-name]').val();
+            var description = $('input[name=test-description]').val();
+            var res = $('input[name=max-result]').val();
+            $.ajax({
+                url: '{% url "create-test" %}',
+                type: 'post',
+                data: {
+                    csrfmiddlewaretoken:csrf,
+                    name:name,
+                    description:description,
+                    result:res,
+                },
+                success: function (response) {
+                    window.location = response.test_pk;
+                }
+            });
+        });
+    });
+</script>
+
+<div class="container">
+    <div class="row">
+        <div id="create-test-card">
+            {% csrf_token %}
+            <h4>Name:</h4>
+            <input type="text" id="test-name" name="test-name" class="form-control form-control-sm">
+            <h4>Description:</h4>
+            <textarea id="test-description" name="test-description" class="form-control form-control-sm"></textarea>
+            <h4>Max result:</h4>
+            <input type="text" id="max-result" name="max-result" class="form-control form-control-sm">
+            <button type="button" id="create-test-btn" class="btn btn-primary btn-sm">Create</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

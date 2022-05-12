@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+    function hideTab(el) {
+        if (el == 1){
+            document.getElementById('workshop-card').style.display = 'block';
+            document.getElementById('completed-tests-card').style.display = 'none';
+            document.getElementById('tab1').style.color = '#F64C72';
+            document.getElementById('tab2').style.color = '#2F2FA2';
+
+        }
+        else if (el == 2){
+            document.getElementById('workshop-card').style.display = 'none';
+            document.getElementById('completed-tests-card').style.display = 'block';
+            document.getElementById('tab1').style.color = '#2F2FA2';
+            document.getElementById('tab2').style.color = '#F64C72';
+        }
+    };
+
+
+    function redactTest(test_pk) {
+        window.location = 'http://127.0.0.1:8000/create-test/' + test_pk;
+    }
+
+    function doTest(test_pk) {
+        window.location = 'http://127.0.0.1:8000/test/' + test_pk;
+    }
+
+</script>
+
+<div class="container">
+    <div class="row">
+        <div id="profile-card">
+            {% csrf_token %}
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" id="tab1" onclick="hideTab(1)">Workshop</a>
+                </li>
+                <li class="nav-item" onclick="hideTab(2)">
+                    <a class="nav-link" id="tab2">Completed tests</a>
+                </li>
+            </ul>
+
+
+            <div id="workshop-card">
+                <div id="created-tests">
+                    <h1>Created tests: </h1>
+                    {% for item in created_tests %}
+                    <div id="created-test-table">
+                        <p>{{ item.name }}</p>
+                        <p>{{ item.date }}</p>
+                        <button type="button" id="redact-test-btn" onclick="redactTest('{{ item.pk }}')" class="btn btn-primary btn-sm">Redact</button>
+                        <button type="button" id="go-to-test-btn" onclick="doTest('{{ item.pk }}')" class="btn btn-primary btn-sm">Do the test</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div id="completed-tests-card">
+                <h1>Completed tests:</h1>
+                <div id="completed-tests">
+                    {% for item in created_tests %}
+                    <div id="completed-test-table">
+                        <p>{{ item.name }}</p>
+                        <p>{{ item.date }}</p>
+                        <button type="button" id="try-again-test-btn" onclick="doTest('{{ item.pk }}')" class="btn btn-primary btn-sm">Go to test</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
