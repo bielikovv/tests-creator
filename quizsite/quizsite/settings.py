@@ -78,8 +78,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tests',
-        'USER': 'empty',
-        'PASSWORD': 'empty',
+        'USER': 'root',
+        'PASSWORD': 'vitrum15',
         'HOST': 'localhost',
     }
 }

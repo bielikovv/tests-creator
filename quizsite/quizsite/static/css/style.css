@@ -225,6 +225,21 @@ select:disabled{
     margin-top: 5px;
 }
 
+#completed-question{
+    font-size: 25px;
+    background-color: #ffffff;
+    color: #F64C72;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 1px;
+    margin-bottom: 10px;
+}
+
+#completed-my-answer{
+    font-size: 20px;
+    margin-left: 5px;
+}
+
 .btn-primary:hover{
     background-color: #ffffff;
     color: #F64C72;

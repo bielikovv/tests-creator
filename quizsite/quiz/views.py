@@ -71,8 +71,9 @@ class RedactTest(View):
 
 class GetTest(View):
     def get(self, request, test_pk):
-        if request.user.profile in Test.objects.get(pk=test_pk).completed_by_user.all():
-            return redirect(reverse('completed-test-page', kwargs={'test_pk':test_pk}))
+        if request.user.is_authenticated:
+            if request.user.profile in Test.objects.get(pk=test_pk).completed_by_user.all():
+                return redirect(reverse('completed-test-page', kwargs={'test_pk':test_pk}))
         test = Test.objects.get(pk=test_pk)
         questions = Question.objects.filter(test=test)
         return render(request, 'quiz/current_test.html', {'questions':questions, 'test':test, 'test_pk':test_pk})

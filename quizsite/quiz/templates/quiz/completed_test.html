@@ -36,8 +36,12 @@
                 <div id="question-results-table">
                     {% for el in item.answer.all %}
                     <div id="user-answer">
-                        <p>Question: {{ item.question.content }}</p>
-                        <p>Your answer: {{ el.content }}</p>
+                        <div id="completed-question">
+                            <p>Question: {{ item.question.content }}</p>
+                        </div>
+                        <div id="completed-my-answer">
+                            <p>Your answer: {{ el.content }}</p>
+                        </div>
                     </div>
                     {% endfor %}
                     <div id="right-answer">
